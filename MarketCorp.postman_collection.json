@@ -1,0 +1,187 @@
+{
+  "info": {
+    "name": "MarketCorp — Supabase REST API",
+    "description": "Test the MarketCorp products backend via Supabase PostgREST.\n\nSetup:\n1. Set SUPABASE_URL and SUPABASE_ANON_KEY in the collection variables.\n2. Run the schema + seed in Supabase SQL Editor first.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "SUPABASE_URL",      "value": "https://your-project.supabase.co", "type": "string" },
+    { "key": "SUPABASE_ANON_KEY", "value": "your-anon-key-here",               "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "GET all products",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "apikey",        "value": "{{SUPABASE_ANON_KEY}}" },
+              { "key": "Authorization", "value": "Bearer {{SUPABASE_ANON_KEY}}" }
+            ],
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/products?select=*&order=created_at.desc",
+              "host": ["{{SUPABASE_URL}}"],
+              "path": ["rest", "v1", "products"],
+              "query": [
+                { "key": "select", "value": "*" },
+                { "key": "order",  "value": "created_at.desc" }
+              ]
+            },
+            "description": "Returns all products ordered by newest first."
+          }
+        },
+        {
+          "name": "GET featured products",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "apikey",        "value": "{{SUPABASE_ANON_KEY}}" },
+              { "key": "Authorization", "value": "Bearer {{SUPABASE_ANON_KEY}}" }
+            ],
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/products?select=*&is_featured=eq.true&limit=4",
+              "host": ["{{SUPABASE_URL}}"],
+              "path": ["rest", "v1", "products"],
+              "query": [
+                { "key": "select",      "value": "*" },
+                { "key": "is_featured", "value": "eq.true" },
+                { "key": "limit",       "value": "4" }
+              ]
+            },
+            "description": "Returns up to 4 featured products for the home page hero grid."
+          }
+        },
+        {
+          "name": "GET single product by ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "apikey",        "value": "{{SUPABASE_ANON_KEY}}" },
+              { "key": "Authorization", "value": "Bearer {{SUPABASE_ANON_KEY}}" },
+              { "key": "Accept",        "value": "application/vnd.pgrst.object+json" }
+            ],
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/products?select=*&id=eq.PASTE_UUID_HERE",
+              "host": ["{{SUPABASE_URL}}"],
+              "path": ["rest", "v1", "products"],
+              "query": [
+                { "key": "select", "value": "*" },
+                { "key": "id",     "value": "eq.PASTE_UUID_HERE" }
+              ]
+            },
+            "description": "Replace PASTE_UUID_HERE with a real product id from the GET all response."
+          }
+        },
+        {
+          "name": "GET products by category",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "apikey",        "value": "{{SUPABASE_ANON_KEY}}" },
+              { "key": "Authorization", "value": "Bearer {{SUPABASE_ANON_KEY}}" }
+            ],
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/products?select=*&category=eq.Audio&order=rating.desc",
+              "host": ["{{SUPABASE_URL}}"],
+              "path": ["rest", "v1", "products"],
+              "query": [
+                { "key": "select",   "value": "*" },
+                { "key": "category", "value": "eq.Audio" },
+                { "key": "order",    "value": "rating.desc" }
+              ]
+            },
+            "description": "Filter by category. Change 'Audio' to Seating, Tech, Lighting, or Accessories."
+          }
+        },
+        {
+          "name": "GET products on sale",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "apikey",        "value": "{{SUPABASE_ANON_KEY}}" },
+              { "key": "Authorization", "value": "Bearer {{SUPABASE_ANON_KEY}}" }
+            ],
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/products?select=*&sale_price=not.is.null&order=sale_price.asc",
+              "host": ["{{SUPABASE_URL}}"],
+              "path": ["rest", "v1", "products"],
+              "query": [
+                { "key": "select",     "value": "*" },
+                { "key": "sale_price", "value": "not.is.null" },
+                { "key": "order",      "value": "sale_price.asc" }
+              ]
+            },
+            "description": "Returns only products with an active sale price."
+          }
+        },
+        {
+          "name": "GET products by price range",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "apikey",        "value": "{{SUPABASE_ANON_KEY}}" },
+              { "key": "Authorization", "value": "Bearer {{SUPABASE_ANON_KEY}}" }
+            ],
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/products?select=*&price=gte.100&price=lte.400&order=price.asc",
+              "host": ["{{SUPABASE_URL}}"],
+              "path": ["rest", "v1", "products"],
+              "query": [
+                { "key": "select", "value": "*" },
+                { "key": "price",  "value": "gte.100" },
+                { "key": "price",  "value": "lte.400" },
+                { "key": "order",  "value": "price.asc" }
+              ]
+            },
+            "description": "Returns products between $100 and $400."
+          }
+        },
+        {
+          "name": "GET products in stock only",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "apikey",        "value": "{{SUPABASE_ANON_KEY}}" },
+              { "key": "Authorization", "value": "Bearer {{SUPABASE_ANON_KEY}}" }
+            ],
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/products?select=*&stock=gt.0&order=rating.desc",
+              "host": ["{{SUPABASE_URL}}"],
+              "path": ["rest", "v1", "products"],
+              "query": [
+                { "key": "select", "value": "*" },
+                { "key": "stock",  "value": "gt.0" },
+                { "key": "order",  "value": "rating.desc" }
+              ]
+            },
+            "description": "Returns only products with stock > 0."
+          }
+        },
+        {
+          "name": "GET related products (same category)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "apikey",        "value": "{{SUPABASE_ANON_KEY}}" },
+              { "key": "Authorization", "value": "Bearer {{SUPABASE_ANON_KEY}}" }
+            ],
+            "url": {
+              "raw": "{{SUPABASE_URL}}/rest/v1/products?select=*&category=eq.Audio&id=neq.PASTE_UUID_HERE&limit=4",
+              "host": ["{{SUPABASE_URL}}"],
+              "path": ["rest", "v1", "products"],
+              "query": [
+                { "key": "select",   "value": "*" },
+                { "key": "category", "value": "eq.Audio" },
+                { "key": "id",       "value": "neq.PASTE_UUID_HERE" },
+                { "key": "limit",    "value": "4" }
+              ]
+            },
+            "description": "Used on the product detail page to show 'You Might Also Like'. Replace category and exclude current product id."
+          }
+        }
+      ]
+    }
+  ]
+}
