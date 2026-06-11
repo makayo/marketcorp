@@ -12,7 +12,7 @@ A robust, standalone full-stack e-commerce architecture engineered with a decoup
 ---
 
 ## 📂 Project Structure
-
+```
 marketcorp/  
 ├── ecommerce-app/          Core React frontend application  
 │   ├── src/  
@@ -22,7 +22,7 @@ marketcorp/
 │   └── .env.example        Environment variable schema template  
 ├── postman/                Automated API validation suites  
 └── supabase_schema.sql     Database relational layout & table definitions  
-
+```
 ---
 
 ## 🚀 Local Development Setup
